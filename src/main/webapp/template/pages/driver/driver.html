@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>待审核司机</title>
+</head>
+<link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../../css/bootstrapValidator.css" rel="stylesheet"/>
+<script src="../../js/jquery-1.9.1.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/bootstrapValidator.js"></script>
+<script src="../../otherJS/alertify.min.js"></script>
+<link rel="stylesheet" href="../../otherCSS/alertify.default.css" />
+<link rel="stylesheet" href="../../otherCSS/alertify.core.css" />
+<script src="../../otherJS/jquery.pagination.js"></script>
+<link rel="stylesheet" href="../../otherCSS/pagination.css" />
+<body>
+	<div class="container">
+		<div class="row" style="top:20px;">
+			<div class="col-md-3">
+				<input type="text" class="form-control" placeholder="司机姓名" id="driverName">
+			</div>
+			<div class="col-md-3">
+				<input type="text" class="form-control" placeholder="手机号" id="driverPhone">
+			</div>
+			<div class="col-md-3">
+				<select class="form-control" id="driverArea">
+					<option value="">选择区域</option>
+					<option value="成都">成都</option>
+					<option value="长沙">长沙</option>
+					<option value="广东">广东</option>
+					<option value="深圳">深圳</option>
+					<option value="上海">上海</option>
+					<option value="杭州">杭州</option>
+					<option value="湖南">湖南</option>
+					<option value="湖北">湖北</option>
+					<option value="广西">广西</option>
+				</select>
+			</div>
+			<div class="col-md-3">
+				<button class="btn btn-primary active" type="button" id="search">
+                	<span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;查询
+                </button>
+			</div>
+		</div>
+		<div class="row" style="margin-top:20px;">
+			<table class="table table-bordered table-hover table-striped text-center" id="driverTable">
+				<thead>
+				    <tr class="bg-primary">
+				      <th>序号</th><th>姓名</th><th>手机号</th><th>申请时间</th><th>地区</th><th>操作</th>
+				    </tr>
+			  	</thead>
+			  	<tbody></tbody>
+			</table>
+			<div class="page col-md-12" style="height:20px;">
+				<div class="pull-left" style="color:#337ab7;" id="pageHeader"></div>
+				<ul class="paginList pagination pull-right" id="Pagination" style="margin:0px;"></ul>
+			</div>			
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	 var baseUrl = "/";
+     
+     $('#search').click(function(){
+    	 init(1);
+     });
+	 
+	 //分页回调函数
+	 function handlePaginationClick(new_page_index, pagination_container){
+       init(new_page_index+1);
+       return false;
+   	 }
+	
+	var init = function(page) {
+		$('.append').remove();
+		var filter = {
+			driverName : $('#driverName').val(),
+			driverPhone : $('#driverPhone').val(),
+			driverArea : $('#driverArea').val()
+		}
+		var pageCondition = {
+			pageNo : page,
+			pageSize : 10,
+			filters : filter 
+		}
+		$.ajax({
+			url :  baseUrl + "waitAuditList.do",
+			type : 'get',
+			dataType : 'json',
+			data : pageCondition,
+			success : function (result) {
+				var html = '';
+				if (result.list != null) {
+					for (var i = 0;i < result.list.length;i++) {
+						html += '<tr class="append">'+
+									'<td>'+ result.list[i].driverId +'</td>'+
+									'<td>'+ result.list[i].driverName +'</td>'+
+									'<td>'+ result.list[i].driverPhone +'</td>'+
+									'<td>'+ result.list[i].createTime +'</td>'+
+									'<td>'+ result.list[i].area +'</td>'+
+									'<td><a type="button" class="btn btn-primary audit">审核</a></td>'+
+								'</tr>'
+					}
+				}			
+				$('#driverTable').append(html);
+				$('#pageHeader').html('当前第'+result.pageNo+'页&nbsp;&nbsp;&nbsp;共'+result.total+'页&nbsp;&nbsp;&nbsp;共'+result.totalSize+'条');
+				$("#Pagination").pagination(result.totalSize, {
+		     	  items_per_page:result.pageSize, //每页显示多少条
+		     	  num_display_entries:8, //显示多少页
+		     	  current_page:result.pageNo-1, //当前页数
+		     	  prev_text:"上一页", 
+		     	  next_text:"下一页",
+		          callback: handlePaginationClick
+			    });
+				
+				$('.audit').each(function(i){
+					$(this).click(function(){
+						var driver = {
+							driverId : result.list[i].driverId,
+							driverName : result.list[i].driverName,
+							driverPhone : result.list[i].driverPhone,
+							driverArea : result.list[i].area
+						}
+						alertify.confirm("是否通过注册司机的审核？", function (e) {
+							if (e) {
+								$.ajax({
+									url : baseUrl + "accept.do",
+									type : 'get',
+									dataType : 'json',
+									data : driver,
+									success : function () {
+										alertify.success("审核成功！");
+										init(1);
+									},
+									fail : function () {
+										alertify.error("系统错误！");
+									}
+								});
+							}
+						});
+					});
+				});
+			},
+			fail : function () {
+				alertify.error("系统异常！");
+			}
+		});
+	}
+		
+	$(function(){
+		init(1);
+	});
+</script>
+</html>

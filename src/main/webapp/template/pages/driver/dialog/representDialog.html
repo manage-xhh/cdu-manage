@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>represent dialog</title>
+</head>
+<style type="text/css">
+	#imghead {
+		width : 100px;
+		height : 100px;
+		border-radius : 50px;
+	}
+</style>
+<body>
+	<div class="modal-header bg-primary">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    <h5 class="modal-title" id="myModalLabel">添加代言人</h5>
+	</div>
+	<form class="form-horizontal" role="form" id="form" action="" method="post" enctype="multipart/form-data">
+		<div class="modal-body">
+			<div class="form-group">
+				<label for="account" class="col-sm-3 control-label">头像:</label>
+    			<div class="col-sm-9">
+      				<div id="preview">
+                        <img id="imghead" border="0" src="/template/images/head_background.jpg" width="100" height="100" onclick="$('#previewImg').click();">
+                    </div>         
+                    <input type="file" onchange="previewImage(this)" style="display:none;" id="previewImg" name="image">
+    			</div>
+			</div>				
+			<div class="form-group">
+				<label for="account" class="col-sm-3 control-label">姓名:</label>
+    			<div class="col-sm-9">
+      				<input type="text" class="form-control" id="name" name="name" placeholder="请输入司机姓名">
+    			</div>
+			</div>
+			<div class="form-group">
+				<label for="password" class="col-sm-3 control-label">座右铭:</label>
+    			<div class="col-sm-9">
+    				<textarea class="form-control" rows="3" id="motto" name="motto"></textarea>
+    			</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">展示:</label>
+				<div class="col-sm-9">
+					<div class="radio">
+						<label><input type="radio" checked="checked" name="status" value="1" id=""><i class="input-helper"></i>网页</label>
+						<label style="margin-left:10px;"><input type="radio" name="status" value="2" id=""><i class="input-helper"></i>后台</label>
+					</div>
+				</div>
+			</div>	
+		</div>	
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-primary" id="sub">确定</button>
+		    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>	    
+		</div>
+	</form>
+</body>
+
+<script type="text/javascript">
+$("#sub").click(function(){
+	$("#form").attr("action" , baseUrl +  "addRepresent.do?name=" + $('#name').val());
+});
+	/* $(function(){
+		var validator = $('#form').bootstrapValidator({
+			message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+	        fields: {
+	        	name : {
+	        		message: 'The username is not valid',
+	                validators: {
+	                    notEmpty: {
+	                        message: '姓名不能为空'
+	                    },
+	                    stringLength: {
+	                        min: 3,
+	                        message: '不能少于一个字'
+	                    }
+	                }
+	            },
+	            motto : {
+	            	message: 'The username is not valid',
+	                validators: {
+	                    notEmpty: {
+	                        message: '座右铭不能为空'
+	                    },
+	                    stringLength: {
+	                        min: 0,
+	                        max: 50,
+	                        message: '不能多余50个字'
+	                    }
+	                }
+	            }
+	        }
+	    });
+	}); */
+</script>
+</html>

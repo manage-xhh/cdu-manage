@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- 移动设备 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>代言司机</title>
+<link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../../css/bootstrapValidator.css" rel="stylesheet"/>
+<script src="../../js/jquery-1.9.1.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/bootstrapValidator.js"></script>
+<script src="../../otherJS/alertify.min.js"></script>
+<link rel="stylesheet" href="../../otherCSS/alertify.default.css" />
+<link rel="stylesheet" href="../../otherCSS/alertify.core.css" />
+<script src="../../otherJS/jquery.pagination.js"></script>
+<link rel="stylesheet" href="../../otherCSS/pagination.css" />
+<script src="../../otherJS/upload.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row" style="top:20px;">
+			<div class="col-md-3">
+				<div class="pull-left">
+					<a href="dialog/representDialog.html" data-toggle="modal" data-target="#representDialog" type="button" class="btn btn-primary active" >
+						<span class="glyphicon glyphicon-plus"></span>添加代言人
+					</a>
+				</div>
+				<div class="modal fade" id="representDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content" style="width:400px;top:100px;left:100px;"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<div class="row">
+					<div class="col-md-5 pull-right">
+						<div class="">
+							<div class="input-group">
+			                    <input type="text" class="form-control" placeholder="输入司机姓名查找..." id='option'/>
+			                    <span class="input-group-btn">
+			                        <button class="btn btn-primary active" type="button" id="search">
+			                        	<span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;查询
+			                        </button>
+			                    </span>
+                			</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<div class="row" style="margin-top:20px;">
+			<table class="table table-bordered table-hover table-striped text-center" id="customerForm">
+				<thead>
+				    <tr class="bg-primary">
+				      <th>序号</th><th>头像</th><th>姓名</th><th>座右铭</th><th>展示</th><th>操作</th>
+				    </tr>
+			  	</thead>
+			  	<tbody></tbody>
+			</table>
+			<div class="page col-md-12" style="height:20px;">
+				<div class="pull-left" style="color:#337ab7;" id="pageHeader"></div>
+				<ul class="paginList pagination pull-right" id="Pagination" style="margin:0px;"></ul>
+			</div>			
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+var baseUrl = "/";
+	 /* var baseUrl = "/";
+     $("#userDialog").on("hidden.bs.modal", function() {  
+         $(this).removeData("bs.modal");  
+     }); 
+     
+     $('#search').click(function(){
+    	 init(1);
+     });
+	 
+	 //分页回调函数
+	 function handlePaginationClick(new_page_index, pagination_container){
+       init(new_page_index+1);
+       return false;
+   	 }
+	
+	var init = function(page) {
+		$('.append').remove();
+		var filter = {
+			account : $('#option').val()
+		}
+		var pageCondition = {
+			pageNo : page,
+			pageSize : 10,
+			filters : filter 
+		}
+		$.ajax({
+			url :  baseUrl + "userList.do",
+			type : 'get',
+			dataType : 'json',
+			data : pageCondition,
+			success : function (result) {
+				var html = '';
+				if (result.list != null) {
+					for (var i = 0;i < result.list.length;i++) {
+						html += '<tr class="append">'+
+									'<td>'+ result.list[i].customerId +'</td>'+
+									'<td>'+ result.list[i].account +'</td>'+
+									'<td>'+ result.list[i].role +'</td>'+
+									'<td>'+ result.list[i].createTime +'</td>'+
+									'<td>'+ result.list[i].lastLoginTime +'</td>'+
+									'<td><a href="dialog/userUpdateDialog.html" data-toggle="modal" data-target="#userDialog" type="button" class="btn btn-primary update" >编辑</a>'+
+									'<a type="button" class="btn btn-primary delete" style="margin-left:30px;">删除</a></td>'+
+								'</tr>'
+					}
+				}		
+				$('#customerForm').append(html);
+				$('#pageHeader').html('当前第'+result.pageNo+'页&nbsp;&nbsp;&nbsp;共'+result.total+'页&nbsp;&nbsp;&nbsp;共'+result.totalSize+'条');
+				$("#Pagination").pagination(result.totalSize, {
+		     	  items_per_page:result.pageSize, //每页显示多少条
+		     	  num_display_entries:8, //显示多少页
+		     	  current_page:result.pageNo-1, //当前页数
+		     	  prev_text:"上一页", 
+		     	  next_text:"下一页",
+		          callback: handlePaginationClick
+			    });
+				
+				$('.update').each(function(i){				
+					$(this).click(function(){
+						$('#userDialog').data('customerId',result.list[i].customerId);					
+					});
+				});
+				
+				$('.delete').each(function(i){
+					$(this).click(function(){
+						alertify.confirm("删除后数据不可恢复，确定要删除吗？", function (e) {
+						    if (e) {
+						    	$.ajax({
+						    		url : baseUrl + "deleteCustomer.do?id=" + result.list[i].customerId,
+						    		type : 'get',	
+						    		dataType : 'json',
+						    		success : function(result){
+						    			alertify.success("删除成功！");
+						    			init(1);
+						    		},
+						    		fail : function(){
+						    			alertify.error("系统异常！");
+						    		}
+						    	});   
+						    }
+						});
+					});
+				});
+			},
+			fail : function () {
+				alertify.error("系统异常！");
+			}
+		}); 
+	}*/
+		
+	$(function(){
+		//init(1);
+	});
+</script>
+</html>
