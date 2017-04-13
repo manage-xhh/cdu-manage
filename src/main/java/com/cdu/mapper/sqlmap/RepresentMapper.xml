@@ -83,7 +83,7 @@
     <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
-    ORDER BY  driver_id
+    ORDER BY  rep_id DESC
   	LIMIT #{start} , #{end}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Byte" >

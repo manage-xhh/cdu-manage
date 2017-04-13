@@ -5,17 +5,17 @@
 <!-- 移动设备 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>代言司机</title>
-<link href="../../css/bootstrap.min.css" rel="stylesheet"/>
-<link href="../../css/bootstrapValidator.css" rel="stylesheet"/>
-<script src="../../js/jquery-1.9.1.min.js"></script>
-<script src="../../js/bootstrap.min.js"></script>
-<script src="../../js/bootstrapValidator.js"></script>
-<script src="../../otherJS/alertify.min.js"></script>
-<link rel="stylesheet" href="../../otherCSS/alertify.default.css" />
-<link rel="stylesheet" href="../../otherCSS/alertify.core.css" />
-<script src="../../otherJS/jquery.pagination.js"></script>
-<link rel="stylesheet" href="../../otherCSS/pagination.css" />
-<script src="../../otherJS/upload.js"></script>
+<link href="/template/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/template/css/bootstrapValidator.css" rel="stylesheet"/>
+<script src="/template/js/jquery-1.9.1.min.js"></script>
+<script src="/template/js/bootstrap.min.js"></script>
+<script src="/template/js/bootstrapValidator.js"></script>
+<script src="/template/otherJS/alertify.min.js"></script>
+<link rel="stylesheet" href="/template/otherCSS/alertify.default.css" />
+<link rel="stylesheet" href="/template/otherCSS/alertify.core.css" />
+<script src="/template/otherJS/jquery.pagination.js"></script>
+<link rel="stylesheet" href="/template/otherCSS/pagination.css" />
+<script src="/template/otherJS/upload.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -50,7 +50,7 @@
 			</div>
 		</div>
 		<div class="row" style="margin-top:20px;">
-			<table class="table table-bordered table-hover table-striped text-center" id="customerForm">
+			<table class="table table-bordered table-hover table-striped text-center" id="representForm">
 				<thead>
 				    <tr class="bg-primary">
 				      <th>序号</th><th>头像</th><th>姓名</th><th>座右铭</th><th>展示</th><th>操作</th>
@@ -66,9 +66,8 @@
 	</div>
 </body>
 <script type="text/javascript">
-var baseUrl = "/";
-	 /* var baseUrl = "/";
-     $("#userDialog").on("hidden.bs.modal", function() {  
+	 var baseUrl = "/";
+     $("#representDialog").on("hidden.bs.modal", function() {  
          $(this).removeData("bs.modal");  
      }); 
      
@@ -85,7 +84,7 @@ var baseUrl = "/";
 	var init = function(page) {
 		$('.append').remove();
 		var filter = {
-			account : $('#option').val()
+			name : $('#option').val()
 		}
 		var pageCondition = {
 			pageNo : page,
@@ -93,7 +92,7 @@ var baseUrl = "/";
 			filters : filter 
 		}
 		$.ajax({
-			url :  baseUrl + "userList.do",
+			url :  baseUrl + "representList.do",
 			type : 'get',
 			dataType : 'json',
 			data : pageCondition,
@@ -102,17 +101,17 @@ var baseUrl = "/";
 				if (result.list != null) {
 					for (var i = 0;i < result.list.length;i++) {
 						html += '<tr class="append">'+
-									'<td>'+ result.list[i].customerId +'</td>'+
-									'<td>'+ result.list[i].account +'</td>'+
-									'<td>'+ result.list[i].role +'</td>'+
-									'<td>'+ result.list[i].createTime +'</td>'+
-									'<td>'+ result.list[i].lastLoginTime +'</td>'+
-									'<td><a href="dialog/userUpdateDialog.html" data-toggle="modal" data-target="#userDialog" type="button" class="btn btn-primary update" >编辑</a>'+
+									'<td>'+ result.list[i].repId +'</td>'+
+									'<td><img src="'+ result.list[i].image +'" style="width:30px;height:30px;"/></td>'+
+									'<td>'+ result.list[i].name +'</td>'+
+									'<td>'+ result.list[i].motto +'</td>'+
+									'<td>'+ result.list[i].status +'</td>'+
+									'<td><a href="/template/pages/driver/dialog/representUpdateDialog.html" data-toggle="modal" data-target="#representDialog" type="button" class="btn btn-primary update" >编辑</a>'+
 									'<a type="button" class="btn btn-primary delete" style="margin-left:30px;">删除</a></td>'+
 								'</tr>'
 					}
 				}		
-				$('#customerForm').append(html);
+				$('#representForm').append(html);
 				$('#pageHeader').html('当前第'+result.pageNo+'页&nbsp;&nbsp;&nbsp;共'+result.total+'页&nbsp;&nbsp;&nbsp;共'+result.totalSize+'条');
 				$("#Pagination").pagination(result.totalSize, {
 		     	  items_per_page:result.pageSize, //每页显示多少条
@@ -125,7 +124,7 @@ var baseUrl = "/";
 				
 				$('.update').each(function(i){				
 					$(this).click(function(){
-						$('#userDialog').data('customerId',result.list[i].customerId);					
+						$('#representDialog').data('repId',result.list[i].repId);					
 					});
 				});
 				
@@ -134,7 +133,7 @@ var baseUrl = "/";
 						alertify.confirm("删除后数据不可恢复，确定要删除吗？", function (e) {
 						    if (e) {
 						    	$.ajax({
-						    		url : baseUrl + "deleteCustomer.do?id=" + result.list[i].customerId,
+						    		url : baseUrl + "deleteRepresent.do?id=" + result.list[i].repId,
 						    		type : 'get',	
 						    		dataType : 'json',
 						    		success : function(result){
@@ -148,16 +147,16 @@ var baseUrl = "/";
 						    }
 						});
 					});
-				});
+				}); 
 			},
 			fail : function () {
 				alertify.error("系统异常！");
 			}
 		}); 
-	}*/
+	}
 		
 	$(function(){
-		//init(1);
+		init(1);
 	});
 </script>
 </html>
