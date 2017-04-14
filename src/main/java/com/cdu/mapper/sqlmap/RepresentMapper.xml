@@ -211,4 +211,8 @@
       status = #{status,jdbcType=TINYINT}
     where rep_id = #{repId,jdbcType=TINYINT}
   </update>
+  
+  <select id="selectHomeRepresent" resultMap="BaseResultMap">
+  	SELECT * FROM represent WHERE status = 1
+  </select>
 </mapper>

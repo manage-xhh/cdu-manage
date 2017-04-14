@@ -27,4 +27,6 @@ public interface RepresentMapper {
     int updateByPrimaryKeySelective(Represent record);
 
     int updateByPrimaryKey(Represent record);
+    
+    List<Represent> selectHomeRepresent();
 }

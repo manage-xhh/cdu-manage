@@ -1,5 +1,7 @@
 package com.cdu.service;
 
+import java.util.List;
+
 import com.cdu.common.Page;
 import com.cdu.common.PageCondition;
 import com.cdu.domain.Represent;
@@ -17,4 +19,5 @@ public interface RepresentService {
     
     void updateRepresent(Represent represent);
     
+    List<Represent> selectRepresentByStatus();
 }

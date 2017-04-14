@@ -3,6 +3,7 @@ package com.cdu.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -105,5 +106,15 @@ public class RepresentController {
         }
         representService.updateRepresent(represent);
         return new ModelAndView("template/pages/driver/represent.html");
+    }
+    
+    @RequestMapping(value = "HomeRepresentList.do" , method = RequestMethod.GET)
+    @ResponseBody
+    public void HomeRepresentList(HttpServletResponse response) throws IOException {
+        List<Represent>  list = representService.selectRepresentByStatus();
+        PrintWriter out = response.getWriter();
+        out.println(JSON.toJSONString(list));
+        out.flush();
+        out.close();
     }
 }

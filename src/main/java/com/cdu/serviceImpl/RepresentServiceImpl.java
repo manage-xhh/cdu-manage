@@ -68,4 +68,8 @@ public class RepresentServiceImpl implements RepresentService{
         representMapper.updateByPrimaryKeySelective(represent);
     }
 
+    public List<Represent> selectRepresentByStatus() {        
+        return representMapper.selectHomeRepresent();
+    }
+
 }
