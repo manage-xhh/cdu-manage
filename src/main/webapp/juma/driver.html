@@ -212,7 +212,7 @@
 			他们都选择了驹马司机创业计划
 		</h2>
 		<div id="masters" class="masters-wrap reslider-container">
-			<ul class="items" style="overflow:initial;" id="items">				
+			<ul class="items" style="overflow:hidden;" id="items">				
 			</ul>
 <img class="master-slider-nav prev" src="driver/arrow.left.png" alt="上一张"> <img class="master-slider-nav next" src="driver/arrow.right.png" alt="下一张"> 
 		</div>
@@ -383,7 +383,22 @@
 	  				dataType : 'json',
 	  				success : function (data) {
 	  					if (data.length > 0) {			
-	  							
+	  						for (var i = 0 ; i < data.length ; i++) {
+	  							var html = '<li style="width:350px;height:160px;float:left;background-color:#fff;position:relative;margin-left:20px;">' +
+	  											'<div style="float:right;margin-top:30px;margin-right:20px;">' +
+	  												'<div>' +
+	  													'<img style="width:100px;height:100px;border-radius:50px;" src="'+ data[i].image +'" alt="'+ data[i].name +'" />' +
+	  												'</div>' +
+	  											'</div>' +
+	  											'<p style="margin-top:40px;margin-bottom:20px;margin-left:30px;font-weight:bold;font-size:15px;">' +
+	  												data[i].name +
+	  											'</p>' +
+	  											'<p style="margin-left:30px;font-size:15px;width:180px;">' +
+	  												data[i].motto +
+	  											'</p>' +
+	  									   '</li>';
+	  							$('#items').append(html);
+	  						}	
 		  				}				
 	  				},
 	  				fail : function () {
