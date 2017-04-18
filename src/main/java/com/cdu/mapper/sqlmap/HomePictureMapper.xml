@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.cdu.mapper.RepresentMapper" >
-  <resultMap id="BaseResultMap" type="com.cdu.domain.Represent" >
-    <id column="rep_id" property="repId" jdbcType="TINYINT" />
+<mapper namespace="com.cdu.mapper.HomePictureMapper" >
+  <resultMap id="BaseResultMap" type="com.cdu.domain.HomePicture" >
+    <id column="id" property="id" jdbcType="TINYINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="motto" property="motto" jdbcType="VARCHAR" />
-    <result column="image" property="image" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="statu" property="statu" jdbcType="TINYINT" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,107 +67,107 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    rep_id, name, motto, image, status
+    id, name, url, statu, path
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cdu.domain.RepresentExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cdu.domain.HomePictureExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from represent
+    from home_picture
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
     <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
-    ORDER BY  rep_id DESC
+    ORDER BY  driver_id
   	LIMIT #{start} , #{end}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Byte" >
     select 
     <include refid="Base_Column_List" />
-    from represent
-    where rep_id = #{repId,jdbcType=TINYINT}
+    from home_picture
+    where id = #{id,jdbcType=TINYINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Byte" >
-    delete from represent
-    where rep_id = #{repId,jdbcType=TINYINT}
+    delete from home_picture
+    where id = #{id,jdbcType=TINYINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.cdu.domain.RepresentExample" >
-    delete from represent
+  <delete id="deleteByExample" parameterType="com.cdu.domain.HomePictureExample" >
+    delete from home_picture
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.cdu.domain.Represent" >
-    insert into represent (rep_id, name, motto, 
-      image, status)
-    values (#{repId,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR}, #{motto,jdbcType=VARCHAR}, 
-      #{image,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT})
+  <insert id="insert" parameterType="com.cdu.domain.HomePicture" >
+    insert into home_picture (id, name, url, 
+      statu, path)
+    values (#{id,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{statu,jdbcType=TINYINT}, #{path,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.cdu.domain.Represent" >
-    insert into represent
+  <insert id="insertSelective" parameterType="com.cdu.domain.HomePicture" >
+    insert into home_picture
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="repId != null" >
-        rep_id,
+      <if test="id != null" >
+        id,
       </if>
       <if test="name != null" >
         name,
       </if>
-      <if test="motto != null" >
-        motto,
+      <if test="url != null" >
+        url,
       </if>
-      <if test="image != null" >
-        image,
+      <if test="statu != null" >
+        statu,
       </if>
-      <if test="status != null" >
-        status,
+      <if test="path != null" >
+        path,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="repId != null" >
-        #{repId,jdbcType=TINYINT},
+      <if test="id != null" >
+        #{id,jdbcType=TINYINT},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="motto != null" >
-        #{motto,jdbcType=VARCHAR},
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
       </if>
-      <if test="image != null" >
-        #{image,jdbcType=VARCHAR},
+      <if test="statu != null" >
+        #{statu,jdbcType=TINYINT},
       </if>
-      <if test="status != null" >
-        #{status,jdbcType=TINYINT},
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.cdu.domain.RepresentExample" resultType="java.lang.Integer" >
-    select count(*) from represent
+  <select id="countByExample" parameterType="com.cdu.domain.HomePictureExample" resultType="java.lang.Integer" >
+    select count(*) from home_picture
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update represent
+    update home_picture
     <set >
-      <if test="record.repId != null" >
-        rep_id = #{record.repId,jdbcType=TINYINT},
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=TINYINT},
       </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.motto != null" >
-        motto = #{record.motto,jdbcType=VARCHAR},
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
       </if>
-      <if test="record.image != null" >
-        image = #{record.image,jdbcType=VARCHAR},
+      <if test="record.statu != null" >
+        statu = #{record.statu,jdbcType=TINYINT},
       </if>
-      <if test="record.status != null" >
-        status = #{record.status,jdbcType=TINYINT},
+      <if test="record.path != null" >
+        path = #{record.path,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -175,44 +175,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update represent
-    set rep_id = #{record.repId,jdbcType=TINYINT},
+    update home_picture
+    set id = #{record.id,jdbcType=TINYINT},
       name = #{record.name,jdbcType=VARCHAR},
-      motto = #{record.motto,jdbcType=VARCHAR},
-      image = #{record.image,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=TINYINT}
+      url = #{record.url,jdbcType=VARCHAR},
+      statu = #{record.statu,jdbcType=TINYINT},
+      path = #{record.path,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cdu.domain.Represent" >
-    update represent
+  <update id="updateByPrimaryKeySelective" parameterType="com.cdu.domain.HomePicture" >
+    update home_picture
     <set >
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="motto != null" >
-        motto = #{motto,jdbcType=VARCHAR},
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
       </if>
-      <if test="image != null" >
-        image = #{image,jdbcType=VARCHAR},
+      <if test="statu != null" >
+        statu = #{statu,jdbcType=TINYINT},
       </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=TINYINT},
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
       </if>
     </set>
-    where rep_id = #{repId,jdbcType=TINYINT}
+    where id = #{id,jdbcType=TINYINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cdu.domain.Represent" >
-    update represent
+  <update id="updateByPrimaryKey" parameterType="com.cdu.domain.HomePicture" >
+    update home_picture
     set name = #{name,jdbcType=VARCHAR},
-      motto = #{motto,jdbcType=VARCHAR},
-      image = #{image,jdbcType=VARCHAR},
-      status = #{status,jdbcType=TINYINT}
-    where rep_id = #{repId,jdbcType=TINYINT}
+      url = #{url,jdbcType=VARCHAR},
+      statu = #{statu,jdbcType=TINYINT},
+      path = #{path,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=TINYINT}
   </update>
-  
-  <select id="selectHomeRepresent" resultMap="BaseResultMap">
-  	SELECT * FROM represent WHERE status = 1 ORDER BY rep_id DESC
-  </select>
 </mapper>

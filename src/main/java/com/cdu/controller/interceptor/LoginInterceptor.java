@@ -2,12 +2,9 @@ package com.cdu.controller.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.cdu.domain.Customer;
 
 public class LoginInterceptor implements HandlerInterceptor{
 
@@ -20,7 +17,7 @@ public class LoginInterceptor implements HandlerInterceptor{
     }
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
-        HttpSession session = request.getSession();
+        /*HttpSession session = request.getSession();
         Customer cus = (Customer) session.getAttribute("user");
         String url = request.getRequestURI();
         if (url.indexOf("driver") < 0) {
@@ -36,7 +33,7 @@ public class LoginInterceptor implements HandlerInterceptor{
             }     
         } else {
             return true;
-        }
-         
+        }*/
+        return true;
     }
 }
