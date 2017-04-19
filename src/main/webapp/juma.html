@@ -13,10 +13,9 @@
 <link rel="shortcut icon" href="http://www.jumapeisong.com/img/logo.ico">
 <link rel="stylesheet" type="text/css" href="home/main.css">
 <link rel="stylesheet" type="text/css" href="home/style.css">
-<script type="text/javascript" src="home/jquery.min.js.下载"></script>
-<script type="text/javascript">
-    var baseUrl = '';
-</script>
+<link href="/template/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="/template/js/jquery-1.9.1.min.js"></script>
+<script src="/template/js/bootstrap.min.js"></script>
 <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="index.class" src="home/index.class.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Jquery" src="home/jquery.min.js(1).下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Tween" src="home/ui.animate.tween.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="SlideBox" src="home/ui.slidebox.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="RollLayer" src="home/ui.rolllayer.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="FxNum" src="home/ui.animate.number.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Json" src="home/json2.min.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="Juicer" src="home/juicer.min.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="PublicUtil" src="home/public.until.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="BgPosAnimate" src="home/plugin.animate.background.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="RequestUtil" src="home/request.until.js.下载"></script><script src="home/pc_nb.js.下载" charset="UTF-8"></script><link rel="stylesheet" type="text/css" href="home/main(1).css"><script charset="utf-8" data-require-id="embed/webimlight/main" src="home/main.js.下载" async=""></script><script type="text/javascript" src="http://p.qiao.baidu.com/cps/site/poll?cb=jsonp_bridge_1491664310280_8881833948075701&amp;l=1&amp;v=149166329357052961&amp;s=10389217&amp;e=23171914&amp;dev=0&amp;auth=%7B%22anonym%22%3A0%2C%22key%22%3A%227814487496933762555vgwc130862910%22%2C%22sn%22%3A%22789948435%22%2C%22id%22%3A%22149166329357052961%22%2C%22from%22%3A4%2C%22token%22%3A%22bridge%22%7D&amp;_time=1491664310280" id="id_jsonp_bridge_1491664310280_8881833948075701" charset="utf-8"></script></head>
 <body class="gray-body">
 	  <!-- 头部 -->
@@ -44,18 +43,7 @@
 	<img src="home/95ba5c41f3fa7a7aaf4243b8279c8ec2.jpg" style="display:none">
 <div class="image-area">
 	<div id="banner" class="image">
-		<div class="image-item image-item1" style="background-image: url(&quot;http://img.sz.jumaps.com/upload/images/be7663334d55e1a929945b466835abdb.jpg&quot;); display: block; opacity: 0.66207;">
-			<a class="nav-item" title="首页" href="http://www.jumapeisong.com/index.html"></a> 
-		</div>
-		<div class="image-item image-item2" style="background-image: url(&quot;http://www.jumapeisong.com/img/banner-2.jpg&quot;); display: block; opacity: 0.33793;">
-			<a class="nav-item" title="合作伙伴" href="http://www.jumapeisong.com/project.html"></a> 
-		</div>
-		<div class="image-item image-item3" style="background-image: url(&quot;http://img.sz.jumaps.com/upload/images/43b82fc42fbfd5d9aca3c302078cece1.jpg&quot;); display: none;">
-			<a class="nav-item" title="物流配送" href="http://www.jumapeisong.com/delivery.html"></a> 
-		</div>
-		<div class="image-item image-item4" style="background-image: url(&quot;http://www.jumapeisong.com/img/banner-3.jpg&quot;); display: none;">
-			<a class="nav-item" title="司机招募" href="juma/driver.html"></a> 
-		</div>
+		
 	</div>
 	<div id="bannerNav" class="dots">
 		<i class=""></i> <i class="active"></i> <i class=""></i> <i class=""></i> 
@@ -350,55 +338,54 @@
 	  		<span> Copyright © 2017 四川驹马企业管理有限公司 | 蜀ICP备16018483号-4 </span>
 	  	</div>
 	  </div>
+	  
 	  <script type="text/javascript">
-	  		(function(){
-	  			(new Image()).src = "/img/home.delivery.hover.png";
-				(new Image()).src = "/img/home.drivers.hover.png";
-	  		})();
+	  	var baseUrl = "/";
+	  	var init = function () {
+	  		$.ajax({
+	  			url : baseUrl + "getHomeList.do",
+	  			method : 'get',
+	  			dataType : 'json',
+	  			success : function (result) {
+	  				if (result.length > 0) {
+	  					var html = '<div id="myCarousel" class="carousel slide" style="margin-left:50%;">' +
+					    			'<ol class="carousel-indicators" id="carousel-indicators">' +		  		
+					  			    '</ol>' +   
+					  			    '<div class="carousel-inner" id="carousel-inner">' +		  			        
+					  			    '</div>' +
+					  			    '<a class="carousel-control left" href="#myCarousel"' + 
+					  			        'data-slide="prev">&lsaquo;' +
+					  			    '</a>' +
+					  			    '<a class="carousel-control right" href="#myCarousel"' + 
+					  			        'data-slide="next">&rsaquo;' +
+					  			    '</a>' +
+					  			'</div>';
+		 				$('#banner').append(html); 
+						for (var i = 0 ; i < result.length ; i++) {
+							if (i == 0) {
+								var html = '<li data-target="#myCarousel" data-slide-to="0" class="active"></li>';
+								var html2 = '<div class="item active">' +
+		  			            				'<img style="width:800px;height:400px;" src=' + result[0].path + '>' +
+		  			        				'</div>';
+							} else {
+								var html = '<li data-target="#myCarousel" data-slide-to=' + i + '></li>';
+								var html2 = '<div class="item">' +
+					            				'<img style="width:800px;height:400px;" src=' + result[i].path + '>' +
+					        				'</div>';
+							}
+							$('#carousel-indicators').append(html);
+							$('#carousel-inner').append(html2);
+						}	
+	  				}  				
+	  			},
+	  			fail : function () {
+	  				alert("系统错误！");
+	  			}
+	  		});
+	  	}	  
+	  	$(function(){
+	  		init();
+	  	})
 	  </script>
-	  <script type="text/javascript">
-			(function() {
-				//ip check
-				$.getJSON('//freegeoip.net/json/?callback=?', function(data) {
-  					console.log(JSON.stringify(data, null, 2));
-  					if(data.city=='Chengdu'||data.city=='成都'){
-  						
-  					} else {
-  					$(".footer div.cooperation").hide();
-  						$(".nav a").each(function(index){
-	  					     $this = $(this);
-	  					     console.info($this.text().indexOf("驹马专车"));
-	  					     if($this.text().indexOf("驹马专车")!=-1){
-	  					        $this.hide();
-	  					     }
-	  					});
-  					}
-				});
-			})();
-	</script>
-	<script src="home/z_stat.php" language="JavaScript"></script><script src="home/core.php" charset="utf-8" type="text/javascript"></script><a href="http://www.cnzz.com/stat/website.php?web_id=1261218094" target="_blank" title="站长统计">站长统计</a>
-	<script>
-		var _hmt = _hmt || [];
-		(function() {
-		  var hm = document.createElement("script");
-		  hm.src = "https://hm.baidu.com/hm.js?d5067fc534d2a20220758bdc0a88ed52";
-		  var s = document.getElementsByTagName("script")[0]; 
-		  s.parentNode.insertBefore(hm, s);
-		})();
-	</script>
-	<script type="text/javascript">
-			  var _paq = _paq || [];
-			  _paq.push(["setDomains", ["*.www.jumapeisong.com"]]);
-			  _paq.push(['trackPageView']);
-			  _paq.push(['enableLinkTracking']);
-			  (function() {
-			   var u=(("https:" == document.location.protocol) ? "https" : "http") + "://jmtj.jumaps.com/piwik/";
-			    _paq.push(['setTrackerUrl',u+'piwik.php']);
-			    _paq.push(['setSiteId', 3]);
-			    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-			    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-			  })();
-    </script>
-
-
+	  
 <ins id="newBridge"><!-- target: nodeBoard --><ins class="nb-nodeboard-base nb-nodeboard-position-base nb-nodeboard-left-bottom nb-show" id="nb_nodeboard"><ins class="nb-nodeboard-contain-base nb-nodeboard-contain"><ins class="nb-nodeboard-top nb-nodeboard-top-0"><ins class="nb-head-title">请您留言</ins><ins class="nb-nodeboard-close" id="nb_nodeboard_close" data-type="min"></ins></ins><ins id="nb_nodeboard_text" class="nb-nodeboard-text"><p class="nb-nodeboard-company">驹马物流</p><p class="nb-nodeboard-link">400-184-9156</p></ins><form id="nb_nodeboard_form" autocomplete="off" class="nb-board-form" action="http://p.qiao.baidu.com/cps//bookmanage/saveBook.action?userId=23171914" method="post" accept-charset="utf-8"><ins id="nb_nodeboard_set" class="nb-nodeboard-set"><ins class="nb-nodeboard-content"><textarea id="nb-nodeboard-set-content-js" name="content" data-ph="请在此输入留言内容，我们会尽快与您联系。（必填）" placeholder="请在此输入留言内容，我们会尽快与您联系。（必填）" class="nb-nodeboard-set-content"></textarea></ins><ins class="nb-nodeboard-name" style="z-index:4;"><ins class="nb-nodeboard-icon nodeName"></ins><input id="nb_nodeboard_set_name" data-write="0" name="visitorName" maxlength="30" class="nb-nodeboard-input" type="text" data-ph="姓名" placeholder="姓名"></ins><ins class="nb-nodeboard-name" id="nb_nodeboard_phone" style="z-index:3;"><ins class="nb-nodeboard-icon nodePhone"></ins><input id="nb_nodeboard_set_phone" name="visitorPhone" maxlength="30" class="nb-nodeboard-input" data-write="1" type="text" data-ph="电话（必填）" placeholder="电话（必填）"></ins><ins class="nb-nodeboard-name" style="z-index:1;"><ins class="nb-nodeboard-icon nodeAddress"></ins><input id="nb_nodeboard_set_address" name="visitorAddress" class="nb-nodeboard-input" maxlength="50" type="text" data-write="0" data-ph="地址" placeholder="地址"></ins></ins></form><ins class="nb-nodeboard-success" id="nb_nodeboard_success"><ins class="nb-success-box"><ins class="nb-success-icon"></ins><ins class="nb-success-title" id="nb_node_messagetitle">感谢留言</ins><ins class="nb-success-content" id="nb_node_messagecontent">我们会尽快与您联系</ins><ins id="sucess_close" class="nb-sucess-close">关闭</ins></ins></ins><ins class="nb-nodeboard-send" id="nb_node_contain"><ins id="nb_nodeboard_send" class="nb-nodeboard-send-btn nb-nodeboard-send-btn-0">发送</ins></ins></ins></ins><!-- end --><!-- target: iconIcon --><ins class="nb-icon-wrap nb-icon-base icon-right-center nb-icon-skin-0 nb-icon-icon nb-customer-icon-style" id="nb_icon_wrap" style="margin-top:-101px;width:116px;"><ins class="nb-icon-inner-wrap" style="height:201px;width:116px;background-image: url(//sgoutong.baidu.com/static/style/images/cf2c5226b0e04deba1351046a3a87b56.png);;"><ins class="nb-icon-bridge0 nb-icon-bridge-base" data-type="iconInvite"></ins></ins></ins><!-- end --><!-- target: invite --><ins class="nb-invite-wrap nb-invite-wrap-base nb-position-base nb-middle customer-invite-style " id="nb_invite_wrap" style="width:340px;display:none;margin-left: -170px;margin-top: -73px;"><ins class="nb-invite-body nb-invite-skin-0" style="height:145px;background:url(//sgoutong.baidu.com/static/style/images/2e55ee1083ae4fa5a102c8535f5a2fbc.png)"><ins class="nb-invite-tool nb-invite-tool-base" id="nb_invite_tool" style=""></ins><ins class="nb-invite-text nb-invite-text-base"><ins class="nb-invite-welcome nb-invite-welcome-base nb-hide" id="nb_invite_welcome"><p style="color: #fff">欢迎来到本网站，请问有什么可以帮您？</p></ins></ins><ins class="nb-invite-btn-base nb-invte-btns-0"><ins class="nb-invite-cancel nb-invite-cancel-base" id="nb_invite_cancel">稍后再说</ins><ins class="nb-invite-ok nb-invite-ok-base" id="nb_invite_ok" style="background-color:#fecb2e;color:#000000;">现在咨询</ins></ins></ins></ins><!-- end --></ins></body></html>

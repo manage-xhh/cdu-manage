@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<img src="" id="img" style="width:800px;height:500px;"/>
+</body>
+<script type="text/javascript">
+	var load = function () {
+		var path = $('#home_pictureDialog').data('path');
+		$('#img').attr('src' , path);
+	}
+	
+	$(function(){
+		load();
+	}); 
+</script>
+</html>

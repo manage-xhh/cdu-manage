@@ -66,8 +66,9 @@
 	</div>
 </body>
 <script type="text/javascript">
-/* 	 var baseUrl = "/";
+ 	 var baseUrl = "/";
      $("#home_pictureDialog").on("hidden.bs.modal", function() {  
+    	 $('.modal-content').css({'top':'100px','left':'100px'});
          $(this).removeData("bs.modal");  
      }); 
      
@@ -92,7 +93,7 @@
 			filters : filter 
 		}
 		$.ajax({
-			url :  baseUrl + "",
+			url :  baseUrl + "homePictureList.do",
 			type : 'get',
 			dataType : 'json',
 			data : pageCondition,
@@ -101,13 +102,15 @@
 				if (result.list != null) {
 					for (var i = 0;i < result.list.length;i++) {
 						html += '<tr class="append">'+
-									'<td>'+ result.list[i].customerId +'</td>'+
-									'<td>'+ result.list[i].account +'</td>'+
-									'<td>'+ result.list[i].role +'</td>'+
-									'<td>'+ result.list[i].createTime +'</td>'+
-									'<td>'+ result.list[i].lastLoginTime +'</td>'+
-									'<td><a href="dialog/userUpdateDialog.html" data-toggle="modal" data-target="#userDialog" type="button" class="btn btn-primary update" >编辑</a>'+
-									'<a type="button" class="btn btn-primary delete" style="margin-left:30px;">删除</a></td>'+
+									'<td>'+ result.list[i].id +'</td>'+
+									'<td><img src="'+ result.list[i].path +'" style="width:30px;height:30px;"/></td>'+
+									'<td>'+ result.list[i].name +'</td>'+
+									'<td>'+ result.list[i].url +'</td>'+
+									'<td>'+ result.list[i].statu +'</td>'+
+									'<td><a href="/template/pages/home_picture/dialog/pictureUpdateDialog.html" data-toggle="modal" data-target="#home_pictureDialog" type="button" class="btn btn-primary update" >编辑</a>'+
+										'<a href="/template/pages/home_picture/dialog/checkDialog.html" style="margin-left:20px;" data-toggle="modal" data-target="#home_pictureDialog" type="button" class="btn btn-primary check">查看大图</a>'+
+										'<a type="button" class="btn btn-primary delete" style="margin-left:20px;">删除</a>'+
+									'</td>'+
 								'</tr>'
 					}
 				}		
@@ -124,7 +127,14 @@
 				
 				$('.update').each(function(i){				
 					$(this).click(function(){
-						$('#userDialog').data('customerId',result.list[i].customerId);					
+						$('#home_pictureDialog').data('id',result.list[i].id);					
+					});
+				});
+				
+				$('.check').each(function(i){				
+					$(this).click(function(){
+						$('.modal-content').css({'top':'50px','left':'-100px'});
+						$('#home_pictureDialog').data('path',result.list[i].path);					
 					});
 				});
 				
@@ -133,7 +143,7 @@
 						alertify.confirm("删除后数据不可恢复，确定要删除吗？", function (e) {
 						    if (e) {
 						    	$.ajax({
-						    		url : baseUrl + "deleteCustomer.do?id=" + result.list[i].customerId,
+						    		url : baseUrl + "deletePicture.do?id=" + result.list[i].id,
 						    		type : 'get',	
 						    		dataType : 'json',
 						    		success : function(result){
@@ -147,16 +157,16 @@
 						    }
 						});
 					});
-				});
+				}); 
 			},
 			fail : function () {
 				alertify.error("系统异常！");
 			}
 		});
-	} */
+	} 
 		
 	$(function(){
-		//init(1);
+		init(1);
 	});
 </script>
 </html>

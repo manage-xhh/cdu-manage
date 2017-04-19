@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>represent dialog</title>
+</head>
+<style type="text/css">
+	#imghead {
+		width : 100px;
+		height : 100px;
+		border-radius : 50px;
+	}
+</style>
+<body>
+	<div class="modal-header bg-primary">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    <h5 class="modal-title" id="myModalLabel">编辑图片</h5>
+	</div>
+	<form class="form-horizontal" role="form" id="form" action="/updatePicture.do" method="post" enctype="multipart/form-data">
+		<input type="text" name="id" style="display:none;" id="id"/>
+		<input type="text" name="path" style="display:none;" id="path"/>
+		<div class="modal-body">
+			<div class="form-group">
+				<label for="account" class="col-sm-3 control-label">头像:</label>
+    			<div class="col-sm-9">
+      				<div id="preview">
+                        <img id="img" border="0" src="/template/images/head_background.jpg" width="100" height="100" onclick="$('#previewImg').click();">
+                    </div>         
+                    <input type="file" onchange="previewImage(this)" style="display:none;" id="previewImg" name="upload">
+    			</div>
+			</div>				
+			<div class="form-group">
+				<label for="account" class="col-sm-3 control-label">图片名:</label>
+    			<div class="col-sm-9">
+      				<input type="text" class="form-control" id="name" name="name" placeholder="请输入图片名">
+    			</div>
+			</div>
+			<div class="form-group">
+				<label for="password" class="col-sm-3 control-label">链接:</label>
+    			<div class="col-sm-9">
+    				<textarea class="form-control" rows="3" id="url" name="url"></textarea>
+    			</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">展示:</label>
+				<div class="col-sm-9">
+					<div class="radio">
+						<label><input type="radio" checked="checked" name="statu" value="1" id="home"><i class="input-helper"></i>网页</label>
+						<label style="margin-left:10px;"><input type="radio" name="statu" value="2" id="backStage"><i class="input-helper"></i>后台</label>
+					</div>
+				</div>
+			</div>	
+		</div>	
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-primary" id="sub">确定</button>
+		    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>	    
+		</div>
+	</form>
+</body>
+
+<script type="text/javascript">
+	var load = function () {
+		var id = $('#home_pictureDialog').data('id');
+		$.ajax({
+			url : baseUrl + 'editPicture.do?id=' + id,
+			type : 'get',
+			dataType : 'json',
+			success : function (result) {
+				$('#img').attr("src" , result.path);
+				$('#name').val(result.name);
+				$('#url').html(result.url);
+				$("#id").val(result.id);
+				$('#path').val(result.path);
+				if (result.statu == 1) {
+					$('#home').attr('checked' , 'checked');
+				} else {
+					$('#backStage').attr('checked' , 'checked');
+				}
+			},
+			fail : function () {
+				alertify.error("系统异常！");
+			}
+		});
+	}
+	
+	$(function(){
+		load();
+		var validator = $('#form').bootstrapValidator({
+			message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+	        fields: {
+	        	name : {
+	        		message: 'The username is not valid',
+	                validators: {
+	                    notEmpty: {
+	                        message: '图片名不能为空'
+	                    }
+	                }
+	            }
+	        }
+	    });
+	}); 
+</script>
+</html>

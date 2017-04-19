@@ -53,5 +53,23 @@
 </body>
 
 <script type="text/javascript">
+var validator = $('#form').bootstrapValidator({
+	message: 'This value is not valid',
+    feedbackIcons: {
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-remove',
+        validating: 'glyphicon glyphicon-refresh'
+    },
+    fields: {
+    	name : {
+    		message: 'The username is not valid',
+            validators: {
+                notEmpty: {
+                    message: '图片名不能为空'
+                }
+            }
+        }
+    }
+});
 </script>
 </html>

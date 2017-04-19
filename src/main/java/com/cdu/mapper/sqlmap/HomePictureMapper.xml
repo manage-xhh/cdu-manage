@@ -83,8 +83,24 @@
     <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
-    ORDER BY  driver_id
+    ORDER BY id DESC
   	LIMIT #{start} , #{end}
+  </select>
+  <select id="selectByStatu" resultMap="BaseResultMap" parameterType="com.cdu.domain.HomePictureExample">
+  	select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from home_picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    ORDER BY id DESC
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Byte" >
     select 

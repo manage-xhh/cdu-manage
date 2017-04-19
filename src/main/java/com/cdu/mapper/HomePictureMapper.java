@@ -27,4 +27,6 @@ public interface HomePictureMapper {
     int updateByPrimaryKeySelective(HomePicture record);
 
     int updateByPrimaryKey(HomePicture record);
+    
+    List<HomePicture> selectByStatu(HomePictureExample example);
 }
