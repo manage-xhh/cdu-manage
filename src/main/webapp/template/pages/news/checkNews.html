@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>添加职位</title>
+<link href="/template/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/template/css/bootstrapValidator.css" rel="stylesheet"/>
+<script src="/template/js/jquery-1.9.1.min.js"></script>
+<script src="/template/js/bootstrap.min.js"></script>
+<script src="/template/js/bootstrapValidator.js"></script>
+<script src="/template/otherJS/alertify.min.js"></script>
+<link rel="stylesheet" href="/template/otherCSS/alertify.default.css" />
+<link rel="stylesheet" href="/template/otherCSS/alertify.core.css" />
+<script src="/template/otherJS/jquery.pagination.js"></script>
+<link rel="stylesheet" href="/template/otherCSS/pagination.css" />
+<script src="/template/otherJS/upload.js"></script>
+<script src="/ueditor/ueditor.config.js"></script>
+<script src="/ueditor/ueditor.all.js"></script>
+</head>
+<style>
+	.row {
+		margin-top : 20px;
+	}
+</style>
+<body>
+	<div class="container">
+		<div class="row">
+			<h3>查看新闻</h3>
+		</div>
+		<div class="row">
+			<label class="control-label col-md-2">新闻标题：</label>
+			<div class="col-md-3" id="newsTitle">
+			</div>
+		</div>
+		<div class="row">
+			<label class="control-label col-md-2">新闻封面：</label>
+			<div class="col-md-3">
+				<img src="" id="mewsImage" style="width:100px;height:100px;"/>       
+			</div>
+		</div>		
+		<div class="row">
+			<label class="control-label col-md-2">新闻类型：</label>
+			<div class="col-md-3" id="newsType">
+			</div>
+		</div>
+		<div class="row">
+			<label class="control-label col-md-2">发布时间：</label>
+			<div class="col-md-3" id="time">
+			</div>
+		</div>
+		<div class="row">
+			<label class="control-label col-md-2">新闻内容：</label>
+			<div class="col-md-8" id="newsContent">
+			</div>
+		</div>					
+	</div>
+</body>
+
+<script type="text/javascript">
+var baseUrl = "/";
+var init = function(id){
+	$.ajax({
+		url : baseUrl + "getNews.do?id=" + id,
+		type : 'get',
+		dataType : 'json',
+		success : function (data) {
+			$('#newsTitle').html(data.newsTitle);
+			$('#mewsImage').attr("src" , data.newsImage);
+			$('#newsType').html(data.newsType);
+			$('#type').html(data.type);
+			$('#time').html(data.time);
+			$('#newsContent').html(data.newsContent);
+		},
+		fail : function () {
+			alertify.alert("系统错误");
+		}
+	});
+} 
+
+$(function(){
+	var url = window.location.href;
+	var id = url.substr(url.indexOf("=") + 1);
+	init(id);
+});
+</script>
+</html>

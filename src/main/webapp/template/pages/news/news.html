@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>职位发布</title>
+	<link href="/template/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="/template/css/bootstrapValidator.css" rel="stylesheet"/>
+	<script src="/template/js/jquery-1.9.1.min.js"></script>
+	<script src="/template/js/bootstrap.min.js"></script>
+	<script src="/template/js/bootstrapValidator.js"></script>
+	<script src="/template/otherJS/alertify.min.js"></script>
+	<link rel="stylesheet" href="/template/otherCSS/alertify.default.css" />
+	<link rel="stylesheet" href="/template/otherCSS/alertify.core.css" />
+	<script src="/template/otherJS/jquery.pagination.js"></script>
+	<link rel="stylesheet" href="/template/otherCSS/pagination.css" />
+	<script src="/template/otherJS/upload.js"></script>
+</head>
+<style>
+</style>
+<body>
+	<div class="container">
+		<div class="row" style="top:20px;">
+			<div class="col-md-6">
+				<a href="/template/pages/news/addNews.html" type="button" class="btn btn-primary active" >
+					<span class="glyphicon glyphicon-plus"></span>添加新闻
+				</a>
+			</div>
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-8 pull-right">
+						<div class="">
+							<div class="input-group">
+			                    <input type="text" class="form-control" placeholder="输入新闻标题查找..." id='option'/>
+			                    <span class="input-group-btn">
+			                        <button class="btn btn-primary active" type="button" id="search">
+			                        	<span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;查询
+			                        </button>
+			                    </span>
+                			</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<div class="row" style="margin-top:20px;">
+			<table class="table table-bordered table-hover table-striped text-center" id="newsForm">
+				<thead>
+				    <tr class="bg-primary">
+				      <th>序号</th><th>封面</th><th>标题</th><th>新闻类型</th><th>发布时间</th><th>操作</th>
+				    </tr>
+			  	</thead>
+			  	<tbody></tbody>
+			</table>
+			<div class="page col-md-12" style="height:20px;">
+				<div class="pull-left" style="color:#337ab7;" id="pageHeader"></div>
+				<ul class="paginList pagination pull-right" id="Pagination" style="margin:0px;"></ul>
+			</div>			
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+ 	 var baseUrl = "/";
+     
+     $('#search').click(function(){
+    	 init(1);
+     });
+	 
+	 //分页回调函数
+	 function handlePaginationClick(new_page_index, pagination_container){
+       init(new_page_index+1);
+       return false;
+   	 }
+	
+	var init = function(page) {
+		$('.append').remove();
+		var filter = {
+			newsTitle : $('#option').val()
+		}
+		var pageCondition = {
+			pageNo : page,
+			pageSize : 10,
+			filters : filter 
+		}
+		$.ajax({
+			url :  baseUrl + "getNewsList.do",
+			type : 'get',
+			dataType : 'json',
+			data : pageCondition,
+			success : function (result) {
+				var html = '';
+				if (result.list != null) {
+					for (var i = 0;i < result.list.length;i++) {
+						html += '<tr class="append">'+
+									'<td>'+ result.list[i].newsId +'</td>'+
+									'<td><img src="'+ result.list[i].newsImage +'" style="width:60px;height:30px;"/></td>'+
+									'<td>'+ result.list[i].newsTitle +'</td>'+
+									'<td>'+ result.list[i].newsType +'</td>'+
+									'<td>'+ result.list[i].time +'</td>'+
+									'<td><a type="button" class="btn btn-primary" target="right" href="/template/pages/news/updateNews.html?id='+ result.list[i].newsId +'">编辑</a>'+
+										'<a type="button" class="btn btn-primary" target="right" href="/template/pages/news/checkNews.html?id='+ result.list[i].newsId +'" style="margin-left:20px;">查看</a>'+
+										'<a type="button" class="btn btn-primary delete" style="margin-left:20px;">删除</a>'+
+									'</td>'+
+								'</tr>'
+					}
+				}		
+				$('#newsForm').append(html);
+				$('#pageHeader').html('当前第'+result.pageNo+'页&nbsp;&nbsp;&nbsp;共'+result.total+'页&nbsp;&nbsp;&nbsp;共'+result.totalSize+'条');
+				$("#Pagination").pagination(result.totalSize, {
+		     	  items_per_page:result.pageSize, //每页显示多少条
+		     	  num_display_entries:8, //显示多少页
+		     	  current_page:result.pageNo-1, //当前页数
+		     	  prev_text:"上一页", 
+		     	  next_text:"下一页",
+		          callback: handlePaginationClick
+			    });
+		
+				$('.delete').each(function(i){
+					$(this).click(function(){
+						alertify.confirm("删除后数据不可恢复，确定要删除吗？", function (e) {
+						    if (e) {
+						    	$.ajax({
+						    		url : baseUrl + "deleteNews.do?id=" + result.list[i].newsId,
+						    		type : 'get',	
+						    		dataType : 'json',
+						    		success : function(result){
+						    			alertify.success("删除成功！");
+						    			init(1);
+						    		},
+						    		fail : function(){
+						    			alertify.error("系统异常！");
+						    		}
+						    	});   
+						    }
+						});
+					}); 
+				}); 
+			},
+			fail : function () {
+				alertify.error("系统异常！");
+			}
+		});
+	} 
+		
+	$(function(){
+		init(1);
+	});
+</script>
+</html>

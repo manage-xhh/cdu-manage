@@ -6,6 +6,22 @@ public class PageCondition {
     private int pageNo; //当前页数
     private int pageSize;//每页条数
     private Map<String , Object> filters; //过滤条件集合
+    private int start;
+    
+    private int end;
+
+    public int getStart() {
+        return start;
+    }
+
+    public void setPage(int start , int size) {
+        this.start = (start - 1) * size;
+        this.end = size;
+    }
+
+    public int getEnd() {
+        return end;
+    }
     
     public int getPageNo() {
         return pageNo;

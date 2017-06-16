@@ -1,0 +1,397 @@
+html {
+	overflow-x: hidden;
+}
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+form,
+input,
+label,
+textarea,
+p,
+header,
+nav,
+section,
+article,
+aside,
+footer,
+figure,
+figcaption,
+menu,
+button {
+	margin: 0;
+	padding: 0;
+}
+img {
+	border: 0;
+}
+ul,
+ol {
+	list-style-type: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+th,
+td,
+div {
+	word-break: break-all;
+	word-wrap: break-word;
+}
+input,
+button,
+select,
+textarea {
+	font-family: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	font-weight: inherit;
+}
+input,
+label {
+	vertical-align: middle;
+	letter-spacing: 0;
+}
+a,
+a:visited {
+	text-decoration: none;
+}
+* {
+	outline: none;
+}
+input::-ms-clear{
+	display:none;
+}
+body {
+	font-family: "Microsoft YaHei",\5FAE\8F6F\96C5\9ED1,STHei,\534E\6587\7EC6\9ED1,"Helvetica Neue",Helvetica,Arial,sans-serif;
+	color: #4a4a4a;
+	font-size:12px;
+	-webkit-text-size-adjust: none;
+}
+.gray-body{
+	background-color: #f3f3f3;
+}
+.w-1196{
+	width: 1196px;
+	margin:0 auto;
+}
+.clear-fl{
+	clear: both;
+}
+/*头部菜单*/
+.head{
+	height: 66px;
+	background-color: #fff;
+	overflow: hidden;
+}
+.head .logo{
+	float: left;
+	display: block;
+	width: 343px;
+	height: 66px;
+	background:url(../img/logo.png) no-repeat left center;
+/*	-webkit-background-size:auto 35px;
+	background-size:auto 35px;*/
+}
+/*.head .contact{
+	float: right;
+	height: 66px;
+	line-height: 66px;
+	background:url(../img/phone.png) no-repeat left;
+	color:#be0002;
+	font-size:20px;
+	padding-left: 20px;
+}*/
+.head .contact-img {
+	float: right;
+	height: 16px;
+	display: block;
+	margin-top: 24px;
+	margin-right: 5px;
+}
+.nav{
+	margin-left:350px;
+}
+.nav a,
+.nav a:visited{
+	display: inline-block;
+	height: 66px;
+	text-align: center;
+	line-height: 66px;
+	color: #333;
+	font-size: 14px;
+	padding: 0 12px;
+}
+.nav a:hover, .head .selected,
+.head .selected:visited{
+	background-color:#d90002;
+	color: #fff;
+}
+/*页脚*/
+.footer{
+	height: 313px;
+	background-color: #1b1b1b;
+	font-size: 14px;
+}
+.footer .content{
+	width:1200px;
+	height: 260px;
+	background-color: #1b1b1b;
+	margin:0 auto;
+}
+.footer .content .text{
+	width: 88px;
+	height: 100%;
+	float: left;
+}
+.footer .content .text .title{
+	margin-top:39px;
+	line-height: 30px;
+	display: block;
+	color: #6d6d6d;
+	text-align: left;
+}
+.footer .content .text a,
+.footer .content .text a:visited{
+	display: block;
+	color: #999;
+	line-height: 24px;
+	text-align: left;
+}
+.footer .content .service,
+.footer .content .news,
+.footer .content .helps,
+.footer .content .cooperation{
+	margin-left: 39px;
+}
+.footer .content .contact{
+	float: right;
+	width:242px;
+}
+.footer .content .contact span{
+	display: block;
+	color:#999;
+	font-size: 12px;
+	padding-left: 40px;
+}
+.footer .content .contact .phone{
+	margin-top:49px;
+	background:url(../img/grey.phone.png) no-repeat left;
+}
+.footer .content .contact .question{
+	margin-top:13px;
+	background:url(../img/grey.question.png) no-repeat left;
+}
+.footer .content .contact .cooperate{
+	margin-top:13px;
+	background:url(../img/grey.cooperation.png) no-repeat left;
+}
+.footer .content .contact span font{
+	color:#ececec;
+	font-size: 14px;
+	line-height: 170%;
+}
+.footer .content .qrcode{
+	float: right;
+	width: 139px;
+	height: 139px;
+	background:url(../img/qrcode.png) no-repeat center;
+	-webkit-background-size:auto 139px;
+	background-size: auto 139px;
+	margin-right: 37px;
+	margin-top:49px;
+}
+.footer .bottom{
+	background-color: #323232;
+	text-align: center;
+	line-height: 22px;
+	padding:10px 0;
+}
+.footer .bottom span{
+	font-size: 12px;
+	color: #999;
+}
+.footer .bottom a,
+.footer .bottom a:visited{
+	font-size: 12px;
+	color: #999;
+}
+/*面包屑导航*/
+.breadcrumb{
+	color: #616161;
+	font-size: 12px;
+	line-height: 40px;
+}
+/*二级导航*/
+.sub-nav{
+	height: 70px;
+	background-color: #fff;
+	text-align: center;
+}
+.sub-nav a, .sub-nav a:visited{
+	display: inline-block;
+	width: 24%;
+	text-align: center;
+	line-height: 70px;
+	color: #b0b0b0;
+	font-size: 18px;
+	background:url(../img/sub.nav.line.png) no-repeat right center;
+}
+.sub-nav a.active, .sub-nav a.active:visited, .sub-nav a:hover{
+	color: #be0002;
+}
+.sub-nav a.last{
+	background:none;
+}
+/*二级页面内容*/
+.sub-con{
+	background-color: #fff;
+	min-height: 500px;
+	_height: 500px;
+	margin-bottom:160px;
+}
+.sub-con-main{
+	padding: 50px 135px 150px;
+}
+.sub-con-text{
+	color: #666;
+	font-size: 14px;
+}
+.sub-con-text p{
+	line-height: 24px;
+	margin-bottom:20px;
+}
+.sub-title{
+	height: 24px;
+	line-height: 24px;
+	margin:50px 0;
+	overflow: hidden;
+}
+.sub-title h3{
+	float: left;
+	color: #262626;
+	font-size: 22px;
+	font-weight: 100;
+	padding-right: 22px;
+	background-color: #fff;
+}
+.sub-title-line{
+	height: 1px;
+	background-color: #e4e4e4;
+	margin-left: 100px;
+	margin-top: 12px;
+}
+.sub-con-more{
+	text-align: right;
+}
+.sub-con-more a, .sub-con-more a:visited{
+	color: #262626;
+	font-size: 14px;
+}
+/*图片列表*/
+.sub-img-item{
+	float: left;
+	width: 290px;
+	font-size: 14px;
+	margin-right: 25px;
+	margin-bottom:20px;
+	/*cursor:pointer;*/
+}
+
+.project-case-list .sub-img-item h4 {
+	cursor: pointer;
+}
+.sub-img-item-last{
+	margin-right: 0;
+}
+.sub-img-item img{
+	display: block;
+	width: 100%;
+	height: 200px;
+}
+.sub-img-item h4{
+	color: #262626;
+	font-weight: 100;
+	margin-top:15px;
+}
+.sub-img-item p{
+	color: #999;
+}
+/*遮罩层*/
+.page-mask{
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-color: #000;
+	opacity: 0.5;
+	*filter: alpha(opacity=50);
+}
+/*加载效果*/
+.page-loading{
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	width: 120px;
+	height: 120px;
+	margin-left: -60px;
+	margin-top: -60px;
+	background:url(../img/loading2.gif) no-repeat center;
+	display: none;
+}
+.load-more{
+	height: 0;
+	background:url(../img/load.gif) no-repeat center;
+	overflow: hidden;
+}
+
+/* 卡车医生二维码效果 */
+.showTdQrCode {
+	position: relative;
+}
+
+.showTdQrCode .qrcode-con {
+	position: absolute;
+	display: block;
+	width: 139px;
+	left: 80px;
+	top: -44px;
+	/*border: 10px solid #fff;*/
+}
+
+.showTdQrCode .qrcode-con .arrow {
+	position: absolute;
+	display: block;
+	left: -19px;
+	top: 45px;
+	border: 10px solid #fff;
+	height: 0;
+	width: 0;
+	border-top-color: transparent;
+	border-bottom-color: transparent;
+	border-left-color: transparent;
+}
+
+.showTdQrCode .qrcode-con img {
+	display: block;
+	width: 100%;
+}
+
+.hideTdQrCode .qrcode-con {
+	display: none;
+}
+
+.footer .content .text .showTdQrCode {
+	color: #ccc;
+}

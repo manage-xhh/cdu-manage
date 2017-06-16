@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>添加职位</title>
+<link href="/template/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/template/css/bootstrapValidator.css" rel="stylesheet"/>
+<script src="/template/js/jquery-1.9.1.min.js"></script>
+<script src="/template/js/bootstrap.min.js"></script>
+<script src="/template/js/bootstrapValidator.js"></script>
+<script src="/template/otherJS/alertify.min.js"></script>
+<link rel="stylesheet" href="/template/otherCSS/alertify.default.css" />
+<link rel="stylesheet" href="/template/otherCSS/alertify.core.css" />
+<script src="/template/otherJS/jquery.pagination.js"></script>
+<link rel="stylesheet" href="/template/otherCSS/pagination.css" />
+<script src="/template/otherJS/upload.js"></script>
+</head>
+<style>
+	#sub {
+		width:50%;
+	}
+	.row {
+		margin-top:20px;
+	}
+</style>
+<body>
+	<div class="container">
+		<div class="row">
+			<label class="control-label col-md-2">职位名称：</label>
+			<div class="col-md-3" id="jobName">
+			</div>
+		</div>
+		<div class="row">
+			<label class="control-label col-md-2">招聘人数：</label>
+			<div class="col-md-3" id="jobCount">
+			</div>
+		</div>		
+		<div class="row">
+			<label class="control-label col-md-2">工作地点：</label>
+			<div class="col-md-3" id="region">
+			</div>
+		</div>	
+		<div class="row">
+			<label class="control-label col-md-2">职位类型：</label>
+			<div class="col-md-3" id="type">
+			</div>
+		</div>	
+		<div class="row">
+			<label class="control-label col-md-2">发布时间：</label>
+			<div class="col-md-3" id="time">
+			</div>
+		</div>	
+		<div class="row">
+			<label class="control-label col-md-2">职位描述：</label>
+			<div class="col-md-8" id="content">
+			</div>
+		</div>	
+	</div>	
+</body>
+<script type="text/javascript">
+var baseUrl = "/";
+var init = function(id){
+	$.ajax({
+		url : baseUrl + "getJob.do?id=" + id,
+		type : 'get',
+		dataType : 'json',
+		success : function (data) {
+			$('#jobName').html(data.jobName);
+			$('#jobCount').html(data.jobCount);
+			$('#region').html(data.region);
+			$('#type').html(data.type);
+			$('#time').html(data.createTime);
+			$('#content').html(data.content);
+		},
+		fail : function () {
+			alertify.alert("系统错误");
+		}
+	});
+} 
+
+$(function(){
+	var url = window.location.href;
+	var id = url.substr(url.indexOf("=") + 1);
+	init(id);
+});
+</script>
+</html>

@@ -13,8 +13,13 @@ import java.util.Date;
  */
 public class FormatUtils {
     private static SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    private static SimpleDateFormat simpleFormate = new SimpleDateFormat("yyyy-MM-dd");
     
     public static String dateToString(Date date){
         return formate.format(date);
+    }
+    
+    public static String simpleFormate(Date date){
+        return simpleFormate.format(date);
     }
 }

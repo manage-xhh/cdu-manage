@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>添加职位</title>
+<link href="/template/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/template/css/bootstrapValidator.css" rel="stylesheet"/>
+<script src="/template/js/jquery-1.9.1.min.js"></script>
+<script src="/template/js/bootstrap.min.js"></script>
+<script src="/template/js/bootstrapValidator.js"></script>
+<script src="/template/otherJS/alertify.min.js"></script>
+<link rel="stylesheet" href="/template/otherCSS/alertify.default.css" />
+<link rel="stylesheet" href="/template/otherCSS/alertify.core.css" />
+<script src="/template/otherJS/jquery.pagination.js"></script>
+<link rel="stylesheet" href="/template/otherCSS/pagination.css" />
+<script src="/template/otherJS/upload.js"></script>
+<script src="/ueditor/ueditor.config.js"></script>
+<script src="/ueditor/ueditor.all.js"></script>
+</head>
+<style>
+	#sub {
+		width:20%;
+	}
+</style>
+<body>
+	<div class="container">
+		<div class="row">
+			<h3>职位编辑</h3>
+		</div>
+		<div class="row">
+			<form class="form-horizontal" role="form" id="form" action="/updateJob.do">
+				<input type="text" name="jobId" style="display:none;" id="jobId">
+				<div class="form-group">
+					<label class="control-label col-md-2">职位名称：</label>
+					<div class="col-md-3">
+						<input type="text" class="form-control" id="jobName" name="jobName" placeholder="请输入职位名称">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-2">招聘人数：</label>
+					<div class="col-md-3">
+						<input type="text" class="form-control" id="jobCount" name="jobCount" placeholder="请输入职位人数">
+					</div>
+				</div>		
+				<div class="form-group">
+					<label class="control-label col-md-2">工作地点：</label>
+					<div class="col-md-3">
+						<select class="form-control" id="region" name="regionId">
+						</select>
+					</div>
+				</div>	
+				<div class="form-group">
+					<label class="control-label col-md-2">职位类型：</label>
+					<div class="col-md-3">
+						<select class="form-control" id="type" name="jobTypeId">
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-2">职位描述：</label>
+					<div class="col-md-8">
+						<script id='ueditor' name='content' type='text/plain'>
+						</script>
+					</div>
+				</div>					
+				<div class="form-group">
+					<div class="col-md-2"></div>
+					<div class="col-md-8">
+						<button type="submit" class="btn btn-danger center-block pull-left" id="sub">确定</button>
+					</div>
+				</div>
+			</form>
+		</div>	
+	</div>
+</body>
+
+<script>
+var ue = UE.getEditor('ueditor');
+</script>
+
+<script type="text/javascript">
+var baseUrl = "/";
+
+var init = function(id){
+	$.ajax({
+		url : baseUrl + "getJob.do?id=" + id,
+		type : 'get',
+		dataType : 'json',
+		success : function (data) {
+			$('#jobId').val(data.jobId);
+			$('#jobName').val(data.jobName);
+			$('#jobCount').val(data.jobCount);
+			$('#region').val(data.regionId);
+			$('#type').val(data.typeId);
+			ue.ready(function() {
+				ue.setContent(data.content);
+			});
+			var validator = $('#form').bootstrapValidator({
+				message: 'This value is not valid',
+		        feedbackIcons: {
+		            valid: 'glyphicon glyphicon-ok',
+		            invalid: 'glyphicon glyphicon-remove',
+		            validating: 'glyphicon glyphicon-refresh'
+		        },
+		        fields: {
+		        	jobName: {
+		            	message: 'The username is not valid',
+		                validators: {
+		                    notEmpty: {
+		                        message: '职位名称不能为空'
+		                    }
+		                }
+		            },
+		            jobCount: {
+		            	message: 'The username is not valid',
+		                validators: {
+		                    notEmpty: {
+		                        message: '招聘人数不能为空'
+		                    }
+		                }
+		            }
+		        }
+		    }); 
+		
+		},
+		fail : function () {
+			alertify.alert("系统错误");
+		}
+	});
+}
+
+var init2 = function(){
+	$.ajax({
+		url : baseUrl + "addJobInit.do",
+		type : 'get',
+		dataType : 'json',
+		success : function (data) {
+			for (var i=0;i<data.region.length;i++) {
+				$('#region').append('<option value='+ data.region[i].regionId +'>'+ data.region[i].regionName +'</option>');
+			}
+			for (var i=0;i<data.type.length;i++) {
+				$('#type').append('<option value='+ data.type[i].typeId +'>'+ data.type[i].typeName +'</option>');
+			}
+		},
+		fail : function () {
+			alertify.alert("系统错误");
+		}
+	});
+}
+
+$(function(){
+	var url = window.location.href;
+	var id = url.substr(url.indexOf("=") + 1);
+	init2();
+	init(id);
+});
+</script>
+</html>

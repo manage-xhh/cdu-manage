@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdu.mapper.JobMapper">
+  <resultMap id="BaseResultMap" type="com.cdu.domain.Job">
+    <id column="job_id" jdbcType="TINYINT" property="jobId" />
+    <result column="job_name" jdbcType="VARCHAR" property="jobName" />
+    <result column="job_count" jdbcType="INTEGER" property="jobCount" />
+    <result column="region_id" jdbcType="TINYINT" property="regionId" />
+    <result column="job_type_id" jdbcType="TINYINT" property="jobTypeId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    job_id, job_name, job_count, region_id, job_type_id, create_time, content
+  </sql>
+  <select id="selectByExample" parameterType="com.cdu.domain.JobExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from job
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Byte" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from job
+    where job_id = #{jobId,jdbcType=TINYINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Byte">
+    delete from job
+    where job_id = #{jobId,jdbcType=TINYINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cdu.domain.JobExample">
+    delete from job
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cdu.domain.Job">
+    insert into job (job_id, job_name, job_count, 
+      region_id, job_type_id, create_time, 
+      content)
+    values (#{jobId,jdbcType=TINYINT}, #{jobName,jdbcType=VARCHAR}, #{jobCount,jdbcType=INTEGER}, 
+      #{regionId,jdbcType=TINYINT}, #{jobTypeId,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cdu.domain.Job">
+    insert into job
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jobId != null">
+        job_id,
+      </if>
+      <if test="jobName != null">
+        job_name,
+      </if>
+      <if test="jobCount != null">
+        job_count,
+      </if>
+      <if test="regionId != null">
+        region_id,
+      </if>
+      <if test="jobTypeId != null">
+        job_type_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jobId != null">
+        #{jobId,jdbcType=TINYINT},
+      </if>
+      <if test="jobName != null">
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobCount != null">
+        #{jobCount,jdbcType=INTEGER},
+      </if>
+      <if test="regionId != null">
+        #{regionId,jdbcType=TINYINT},
+      </if>
+      <if test="jobTypeId != null">
+        #{jobTypeId,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cdu.common.PageCondition" resultType="java.lang.Integer">
+    SELECT count(*) FROM job
+    <where>
+  		<if test="filters != null and filters.jobName != null">
+  			and job_name = #{filters.jobName}
+  		</if>
+  		<if test="filters != null and filters.jobType != null">
+  			and job_type_id = #{filters.jobType}
+  		</if>
+  		<if test="filters != null and filters.regionId != null">
+  			and region_id = #{filters.regionId}
+  		</if>
+  	</where>	
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update job
+    <set>
+      <if test="record.jobId != null">
+        job_id = #{record.jobId,jdbcType=TINYINT},
+      </if>
+      <if test="record.jobName != null">
+        job_name = #{record.jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobCount != null">
+        job_count = #{record.jobCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.regionId != null">
+        region_id = #{record.regionId,jdbcType=TINYINT},
+      </if>
+      <if test="record.jobTypeId != null">
+        job_type_id = #{record.jobTypeId,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update job
+    set job_id = #{record.jobId,jdbcType=TINYINT},
+      job_name = #{record.jobName,jdbcType=VARCHAR},
+      job_count = #{record.jobCount,jdbcType=INTEGER},
+      region_id = #{record.regionId,jdbcType=TINYINT},
+      job_type_id = #{record.jobTypeId,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      content = #{record.content,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cdu.domain.Job">
+    update job
+    <set>
+      <if test="jobName != null">
+        job_name = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobCount != null">
+        job_count = #{jobCount,jdbcType=INTEGER},
+      </if>
+      <if test="regionId != null">
+        region_id = #{regionId,jdbcType=TINYINT},
+      </if>
+      <if test="jobTypeId != null">
+        job_type_id = #{jobTypeId,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where job_id = #{jobId,jdbcType=TINYINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cdu.domain.Job">
+    update job
+    set job_name = #{jobName,jdbcType=VARCHAR},
+      job_count = #{jobCount,jdbcType=INTEGER},
+      region_id = #{regionId,jdbcType=TINYINT},
+      job_type_id = #{jobTypeId,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR}
+    where job_id = #{jobId,jdbcType=TINYINT}
+  </update>
+  
+   <insert id="insertRegion" parameterType="com.cdu.domain.Region">
+  	INSERT INTO region VALUES(NULL , #{regionName})
+  </insert>
+  
+  <insert id="insertType" parameterType="com.cdu.domain.JobType">
+  	INSERT INTO job_type VALUES(NULL , #{typeName})
+  </insert>
+  
+  <resultMap id="regionMap" type="com.cdu.domain.Region" >
+    <id column="region_id" property="regionId" jdbcType="TINYINT" />
+    <result column="region_name" property="regionName" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectRegion" resultMap="regionMap">
+  	SELECT region_id , region_name FROM region 
+  </select>
+  <resultMap id="typeMap" type="com.cdu.domain.JobType" >
+    <id column="type_id" property="typeId" jdbcType="TINYINT" />
+    <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectType" resultMap="typeMap">
+  	SELECT * FROM job_type 
+  </select>
+  
+  <resultMap id="JobVoMap" type="com.cdu.domain.vo.JobVo" >
+    <id column="job_id" property="jobId" jdbcType="TINYINT" />
+    <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+    <result column="job_count" property="jobCount" jdbcType="INTEGER" />
+    <result column="region_name" property="region" jdbcType="VARCHAR" />
+    <result column="type_name" property="type" jdbcType="VARCHAR" />
+    <result column="region_id" property="regionId" jdbcType="TINYINT" />
+    <result column="type_id" property="typeId" jdbcType="TINYINT" />
+    <result column="create_time" property="time" jdbcType="TIMESTAMP" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+  </resultMap>
+  
+  <sql id="selectAll_where_clause">
+  	j.job_id,j.job_name,j.job_count,j.region_id,j.job_type_id,j.create_time,j.content,
+  	r.region_id,r.region_name,
+  	t.type_id,t.type_name
+  </sql>
+  
+  <select id="selectAll" parameterType="com.cdu.common.PageCondition" resultMap="JobVoMap">
+  	SELECT 
+  	<include refid="selectAll_where_clause"/>
+  	FROM job j LEFT JOIN region r ON j.region_id = r.region_id LEFT JOIN job_type t ON j.job_type_id = t.type_id
+  	<where>
+  		<if test="filters != null and filters.jobName != null and filters.jobName != '' ">
+  			and j.job_name = #{filters.jobName}
+  		</if>
+  		<if test="filters != null and filters.jobType != null">
+  			and j.job_type_id = #{filters.jobType}
+  		</if>
+  		<if test="filters != null and filters.regionId != null">
+  			and j.region_id = #{filters.regionId}
+  		</if>
+  	</where>	
+    ORDER BY  j.job_id DESC
+  	LIMIT #{start} , #{end}
+  </select>
+  
+  <select id="selectById" parameterType="java.lang.Byte" resultMap="JobVoMap">
+  	SELECT 
+  	<include refid="selectAll_where_clause"/>
+  	FROM job j LEFT JOIN region r ON j.region_id = r.region_id LEFT JOIN job_type t ON j.job_type_id = t.type_id
+  	WHERE j.job_id = #{jobId,jdbcType=TINYINT}
+  </select>
+</mapper>

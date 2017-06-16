@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="modal-header bg-primary">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    <h5 class="modal-title" id="myModalLabel">职位分类</h5>
+	</div>
+	<form class="form-horizontal" role="form" id="form" action="" method="post">
+		<div class="modal-body">				
+			<div class="form-group">
+				<label for="jobType" class="col-sm-3 control-label">类型名称:</label>
+    			<div class="col-sm-9">
+      				<input type="text" class="form-control" id="typeName" name="typeName" autocomplete="off" placeholder="请输入类型名">
+    			</div>
+			</div>	
+		</div>	
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary" id="sub">确定</button>
+		    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>	    
+		</div>
+	</form>
+</body>
+<script type="text/javascript">
+$('#sub').click(function(){
+	if($('#typeName').val() == null || $('#typeName').val() == ''){
+		alertify.error("类型名称不能为空！");
+		return ;
+	}
+	$.ajax({
+		url : "/addType.do",
+		type : 'post',
+		data : $('#form').serialize(),
+		async : false,
+		success : function (result) {
+			alertify.success("保存成功");	
+			$("#jobDialog").modal('hide');
+		},
+		fail : function () {
+			alertify.error("系统错误");
+		}
+	});	
+});
+</script>
+</html>
